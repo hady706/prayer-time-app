@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prayer Times</title>
+</head>
+<body>
+    <h1>Prayer Times</h1>
+    <div id="prayer-times">
+        <p>Loading prayer times...</p>
+    </div>
+
+    <script>
+      fetch('https://api.aladhan.com/v1/timings?latitude=33.8886&longitude=35.4955&method=2')
+        .then(response => response.json())
+        .then(data => {
+          const timings = data.data.timings;
+          document.getElementById('prayer-times').innerHTML = `
+            <p>Fajr: ${timings.Fajr}</p>
+            <p>Dhuhr: ${timings.Dhuhr}</p>
+            <p>Asr: ${timings.Asr}</p>
+            <p>Maghrib: ${timings.Maghrib}</p>
+            <p>Isha: ${timings.Isha}</p>
+          `;
+        })
+        .catch(error => {
+          document.getElementById('prayer-times').innerHTML = '<p>Failed to load prayer times. Please try again.</p>';
+        });
+    </script>
+</body>
+</html>
